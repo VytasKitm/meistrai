@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-    "scripts": {
-    "dev": "vite",
+  "scripts": {
+    "dev": "nodemon --quiet src/server.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "meistrai": "file:..",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.10",
     "pg": "^8.15.6"
