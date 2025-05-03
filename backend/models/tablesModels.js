@@ -4,133 +4,133 @@ import { pool } from "../database/database.js";
 // pagrindiniu lenteliu sukurimas:
 //-------------------------------------------------------------------------------------------
 
-async function meistraiTableCreate() {
-      const query = `CREATE TABLE IF NOT EXISTS meistrai (
+async function mechanicsTableCreate() {
+      const query = `CREATE TABLE IF NOT EXISTS mechanics (
                         id                SERIAL PRIMARY KEY,
-                        vardas            TEXT NOT NULL,
-                        pavarde           TEXT NOT NULL,
-                        servisai_id       INT NOT NULL
+                        name              TEXT NOT NULL,
+                        last_name         TEXT NOT NULL,
+                        service_id        INT NOT NULL
                   );`
       try {
             await pool.query(query)
-            console.log('\x1b[33m meistrai\x1b[0m \x1b[32m Table created.\x1b[0m')
+            console.log('\x1b[33m mechanics\x1b[0m \x1b[32m Table created.\x1b[0m')
       }
       catch(error) {
-            console.log("\x1b[31m meistrai table ceation failed.\x1b[0m", error)
+            console.log("\x1b[31m mechanics table ceation failed.\x1b[0m", error)
       }          
       await pool.query(query)
 }
 
-async function servisaiTableCreate() {
-      const query = `CREATE TABLE IF NOT EXISTS servisai (
+async function servicesTableCreate() {
+      const query = `CREATE TABLE IF NOT EXISTS services (
                         id                SERIAL PRIMARY KEY,
-                        pavadinimas       TEXT NOT NULL,
-                        miestai_id        INT NOT NULL
+                        name              TEXT NOT NULL,
+                        city_id           INT NOT NULL
                   );`
       try {
             await pool.query(query)
-            console.log('\x1b[33m servisai\x1b[0m \x1b[32m Table created.\x1b[0m')
+            console.log('\x1b[33m services\x1b[0m \x1b[32m Table created.\x1b[0m')
       }
       catch(error) {
-            console.log("\x1b[31m servisai table ceation failed.\x1b[0m", error)
+            console.log("\x1b[31m services table ceation failed.\x1b[0m", error)
       }
 }
 
-async function miestaiTableCreate() {
-      const query = `CREATE TABLE IF NOT EXISTS miestai (
-                        id                SERIAL PRIMARY KEY,
-                        pavadinimas       TEXT NOT NULL
+async function citiesTableCreate() {
+      const query = `CREATE TABLE IF NOT EXISTS cities (
+                        id               SERIAL PRIMARY KEY,
+                        name             TEXT NOT NULL
                   );`
       try {
             await pool.query(query)
-            console.log('\x1b[33m miestai\x1b[0m \x1b[32m Table created.\x1b[0m')
+            console.log('\x1b[33m city\x1b[0m \x1b[32m Table created.\x1b[0m')
       }
       catch(error) {
-            console.log("\x1b[31m miestai table ceation failed.\x1b[0m", error)
+            console.log("\x1b[31m city table ceation failed.\x1b[0m", error)
       }
 }
 
-async function vartotojaiTableCreate() {
-      const query = `CREATE TABLE IF NOT EXISTS vartotojai (
+async function usersTableCreate() {
+      const query = `CREATE TABLE IF NOT EXISTS users (
                         id                SERIAL PRIMARY KEY,
-                        vardas            TEXT NOT NULL,
+                        name              TEXT NOT NULL,
                         email             VARCHAR (50) NOT NULL UNIQUE,
                         role              TEXT NOT NULL,
                         password          TEXT NOT NULL
                   );`
       try {
             await pool.query(query)
-            console.log('\x1b[33m vartotojai\x1b[0m \x1b[32m Table created.\x1b[0m')
+            console.log('\x1b[33m users\x1b[0m \x1b[32m Table created.\x1b[0m')
       }
       catch(error) {
-            console.log("\x1b[31m vartotojai table ceation failed.\x1b[0m", error)
+            console.log("\x1b[31m users table ceation failed.\x1b[0m", error)
       }
 }
 
-async function ivertinimaiTableCreate() {
-      const query = `CREATE TABLE IF NOT EXISTS ivertinimai (
-                        PRIMARY KEY (vartotojai_id, meistrai_id),
-                        vartotojai_id           INT NOT NULL,
-                        meistrai_id             INT NOT NULL
-
+async function ratingsTableCreate() {
+      const query = `CREATE TABLE IF NOT EXISTS ratings (
+                        PRIMARY KEY (users_id, mechanics_id),
+                        users_id          INT NOT NULL,
+                        mechanics_id      INT NOT NULL,
+                        rating            INT
                   );`
       try {
             await pool.query(query)
-            console.log('\x1b[33m ivertinimai\x1b[0m \x1b[32m Table created.\x1b[0m')
+            console.log('\x1b[33m ratings\x1b[0m \x1b[32m Table created.\x1b[0m')
       }
       catch(error) {
-            console.log("\x1b[31m ivertinimai table ceation failed.\x1b[0m", error)
+            console.log("\x1b[31m ratings table ceation failed.\x1b[0m", error)
       }
 }
 //-------------------------------------------------------------------------------------------
 // rysiu pridejimas lentelese
 //-------------------------------------------------------------------------------------------
 
-async function meistraiTableConstraints() {
-      const query = `ALTER TABLE IF EXISTS meistrai
-                        DROP CONSTRAINT IF EXISTS FK_meistrai_servisai,
-                        ADD CONSTRAINT FK_meistrai_servisai
-                              FOREIGN KEY (servisai_id) REFERENCES servisai(id)`
+async function mechanicsTableConstraints() {
+      const query = `ALTER TABLE IF EXISTS mechanics
+                        DROP CONSTRAINT IF EXISTS FK_mechanics_services,
+                        ADD CONSTRAINT FK_mechanics_services
+                              FOREIGN KEY (service_id) REFERENCES services(id)`
 
       try {
             await pool.query(query)
-            console.log('\x1b[33m meistrai -> servisai\x1b[0m \x1b[32m relation created.\x1b[0m')
+            console.log('\x1b[33m mechanics -> services\x1b[0m \x1b[32m relation created.\x1b[0m')
       }
       catch (error) {
-            console.log('\x1b[33m meistrai -> servisai\x1b[0m \x1b[31m relation failed.\x1b[0m')
+            console.log('\x1b[33m mechanics -> services\x1b[0m \x1b[31m relation failed.\x1b[0m', error)
       }
 }
 
-async function servisaiTableConstraints() {
-      const query = `ALTER TABLE IF EXISTS servisai
-                        DROP CONSTRAINT IF EXISTS FK_servisai_miestai,
-                        ADD CONSTRAINT FK_servisai_miestai
-                              FOREIGN KEY (miestai_id) REFERENCES miestai(id)`
+async function servicesTableConstraints() {
+      const query = `ALTER TABLE IF EXISTS services
+                        DROP CONSTRAINT IF EXISTS FK_services_cities,
+                        ADD CONSTRAINT FK_services_cities
+                              FOREIGN KEY (city_id) REFERENCES cities(id)`
 
       try {
             await pool.query(query)
-            console.log('\x1b[33m servisai -> miestai\x1b[0m \x1b[32m relation created.\x1b[0m')
+            console.log('\x1b[33m services -> cities\x1b[0m \x1b[32m relation created.\x1b[0m')
       }
       catch(error) {
-            console.log('\x1b[33m servisai -> miestai\x1b[0m \x1b[31m relation failed.\x1b[0m')
+            console.log('\x1b[33m services -> cities\x1b[0m \x1b[31m relation failed.\x1b[0m', error)
       }
 }
 
-async function ivertinimaiTableConstraints() {
-      const query = `ALTER TABLE IF EXISTS ivertinimai
-                        DROP CONSTRAINT IF EXISTS FK_reitingai_vartotojai,
-                        ADD CONSTRAINT FK_reitingai_vartotojai
-                              FOREIGN KEY (vartotojai_id) REFERENCES vartotojai(id),
-                        DROP CONSTRAINT IF EXISTS FK_reitingai_meistrai,
-                        ADD CONSTRAINT FK_reitingai_meistrai
-                              FOREIGN KEY (meistrai_id) REFERENCES meistrai(id)`
+async function ratingsTableConstraints() {
+      const query = `ALTER TABLE IF EXISTS ratings
+                        DROP CONSTRAINT IF EXISTS FK_ratings_users,
+                        ADD CONSTRAINT FK_ratings_users
+                              FOREIGN KEY (users_id) REFERENCES users(id),
+                        DROP CONSTRAINT IF EXISTS FK_ratings_mechanics,
+                        ADD CONSTRAINT FK_ratings_mechanics
+                              FOREIGN KEY (mechanics_id) REFERENCES mechanics (id)`
                         
       try {
             await pool.query(query)
-            console.log('\x1b[33m ivertinimai -> vartotojai, meistrai\x1b[0m \x1b[32m relation created.\x1b[0m')
+            console.log('\x1b[33m ratings -> users, mechanics\x1b[0m \x1b[32m relation created.\x1b[0m')
       }
       catch(error) {
-            console.log('\x1b[33m ivertinimai -> vartotojai, meistrai\x1b[0m \x1b[31m relation failed.\x1b[0m', error)
+            console.log('\x1b[33m ratings -> users, mechanics\x1b[0m \x1b[31m relation failed.\x1b[0m', error)
       }
 }
 
@@ -140,23 +140,23 @@ async function ivertinimaiTableConstraints() {
 
 
 async function deleteAllTables() {
-      const query = 'DROP TABLE IF EXISTS meistrai, servisai, miestai, ivertinimai, vartotojai'
+      const query = 'DROP TABLE IF EXISTS mechanics, services, cities, ratings, users'
       try {
             await pool.query(query)
-            console.log('\x1b[33m meistrai, servisai, miestai, ivertinimai, vartotojai\x1b[0m \x1b[32m Tables deleted.\x1b[0m')
+            console.log('\x1b[33m mechanics, services, cities, ratings, users\x1b[0m \x1b[32m Tables deleted.\x1b[0m')
       }
       catch(error) {
             console.log("\x1b[31m Deleting all tables failed\x1b[0m", error)
       }
 }
 
-export {    meistraiTableCreate,
-            servisaiTableCreate,
-            miestaiTableCreate, 
-            vartotojaiTableCreate, 
-            ivertinimaiTableCreate,
-            meistraiTableConstraints,
-            servisaiTableConstraints,
-            ivertinimaiTableConstraints,
+export {    mechanicsTableCreate,
+            servicesTableCreate,
+            citiesTableCreate, 
+            usersTableCreate, 
+            ratingsTableCreate,
+            mechanicsTableConstraints,
+            servicesTableConstraints,
+            ratingsTableConstraints,
             deleteAllTables
       }

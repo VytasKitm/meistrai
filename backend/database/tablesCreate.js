@@ -1,26 +1,26 @@
 import {
-      meistraiTableCreate,
-      servisaiTableCreate,
-      miestaiTableCreate,
-      vartotojaiTableCreate,
-      ivertinimaiTableCreate,
-      meistraiTableConstraints,
-      servisaiTableConstraints,
-      ivertinimaiTableConstraints,
+      mechanicsTableCreate,
+      servicesTableCreate,
+      citiesTableCreate,
+      usersTableCreate,
+      ratingsTableCreate,
+      mechanicsTableConstraints,
+      servicesTableConstraints,
+      ratingsTableConstraints,
       deleteAllTables
 } from '../models/tablesModels.js'
 
 async function createTables() {
       try {
             await deleteAllTables()
-            await meistraiTableCreate()
-            await servisaiTableCreate()
-            await miestaiTableCreate()
-            await vartotojaiTableCreate()
-            await ivertinimaiTableCreate()
-            await meistraiTableConstraints()
-            await servisaiTableConstraints()
-            await ivertinimaiTableConstraints()
+            await mechanicsTableCreate()
+            await servicesTableCreate()
+            await citiesTableCreate()
+            await usersTableCreate()
+            await ratingsTableCreate()
+            await mechanicsTableConstraints()
+            await servicesTableConstraints()
+            await ratingsTableConstraints()
       }
       catch (error) {
             process.exit(1)

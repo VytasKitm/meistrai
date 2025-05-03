@@ -2,7 +2,6 @@ import app from "./app.js";
 import dotenv from 'dotenv'
 import { connectionTest } from '../database/database.js'
 import createTables from "../database/tablesCreate.js";
-dotenv.config()
 
 const {
       PORT,

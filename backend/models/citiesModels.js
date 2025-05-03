@@ -1,12 +1,12 @@
 import {pool} from "../database/database.js"
 
-async function miestasCreateModel({pavadinimas}) {
+async function cityCreateModel({name}) {
 
-      const query = `INSERT INTO miestai (pavadinimas)
+      const query = `INSERT INTO cities (name)
                         VALUES ($1)
                         RETURNING id`
       
-      const values = [pavadinimas]
+      const values = [name]
 
       try {
             const result = await pool.query(query, values)
@@ -18,4 +18,4 @@ async function miestasCreateModel({pavadinimas}) {
       
 }
 
-export { miestasCreateModel }
+export { cityCreateModel }

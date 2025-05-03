@@ -2,7 +2,10 @@ import express, { json } from 'express'
 import cors from 'cors'
 import errorHandler from '../middlewares/errorHandler.js'
 import morgan from 'morgan'
-import miestaiRouter from '../routes/miestaiRouter.js'
+import citiesRouter from '../routes/citiesRouter.js'
+import mechanicsRouter from '../routes/mechanicsRouter.js'
+import serviceRouter from '../routes/serviceRouter.js'
+import userRouter from '../routes/userRouter.js'
 
 const app = express()
 
@@ -14,7 +17,10 @@ app.use(
 
 app.use(express.json())
 
-app.use("/miestai", miestaiRouter)
+app.use("/cities", citiesRouter)
+app.use("/mechanics", mechanicsRouter)
+app.use("/services", serviceRouter)
+app.use("/users", userRouter)
 
 app.use(cors())
 
