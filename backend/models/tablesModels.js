@@ -9,7 +9,8 @@ async function mechanicsTableCreate() {
                         id                SERIAL PRIMARY KEY,
                         name              TEXT NOT NULL,
                         last_name         TEXT NOT NULL,
-                        service_id        INT NOT NULL
+                        service_id        INT NOT NULL,
+                        specialization_id INT NOT NULL
                   );`
       try {
             await pool.query(query)
@@ -56,7 +57,7 @@ async function usersTableCreate() {
                         name              TEXT NOT NULL,
                         email             VARCHAR (50) NOT NULL UNIQUE,
                         role              TEXT NOT NULL,
-                        password          TEXT NOT NULL
+                        password_h          TEXT NOT NULL
                   );`
       try {
             await pool.query(query)
@@ -82,6 +83,20 @@ async function ratingsTableCreate() {
             console.log("\x1b[31m ratings table ceation failed.\x1b[0m", error)
       }
 }
+
+async function specializationTableCreate() {
+      const query = `CREATE TABLE IF NOT EXISTS specializations (
+                        id                SERIAL PRIMARY KEY,
+                        name              TEXT NOT NULL
+                  );`
+      try {
+            await pool.query(query)
+            console.log('\x1b[33m specializations\x1b[0m \x1b[32m Table created.\x1b[0m')
+      }
+      catch(error) {
+            console.log("\x1b[31m specializations table ceation failed.\x1b[0m", error)
+      }
+}
 //-------------------------------------------------------------------------------------------
 // rysiu pridejimas lentelese
 //-------------------------------------------------------------------------------------------
@@ -90,7 +105,10 @@ async function mechanicsTableConstraints() {
       const query = `ALTER TABLE IF EXISTS mechanics
                         DROP CONSTRAINT IF EXISTS FK_mechanics_services,
                         ADD CONSTRAINT FK_mechanics_services
-                              FOREIGN KEY (service_id) REFERENCES services(id)`
+                              FOREIGN KEY (service_id) REFERENCES services(id),
+                        DROP CONSTRAINT IF EXISTS FK_mechanics_specializations,
+                        ADD CONSTRAINT FK_mechanics_specializations
+                              FOREIGN KEY (specialization_id) REFERENCES specializations(id)`
 
       try {
             await pool.query(query)
@@ -116,6 +134,7 @@ async function servicesTableConstraints() {
       }
 }
 
+
 async function ratingsTableConstraints() {
       const query = `ALTER TABLE IF EXISTS ratings
                         DROP CONSTRAINT IF EXISTS FK_ratings_users,
@@ -140,10 +159,10 @@ async function ratingsTableConstraints() {
 
 
 async function deleteAllTables() {
-      const query = 'DROP TABLE IF EXISTS mechanics, services, cities, ratings, users'
+      const query = 'DROP TABLE IF EXISTS mechanics, services, specializations, cities, ratings, users'
       try {
             await pool.query(query)
-            console.log('\x1b[33m mechanics, services, cities, ratings, users\x1b[0m \x1b[32m Tables deleted.\x1b[0m')
+            console.log('\x1b[33m mechanics, services, specializations, cities, ratings, users\x1b[0m \x1b[32m Tables deleted.\x1b[0m')
       }
       catch(error) {
             console.log("\x1b[31m Deleting all tables failed\x1b[0m", error)
@@ -158,5 +177,6 @@ export {    mechanicsTableCreate,
             mechanicsTableConstraints,
             servicesTableConstraints,
             ratingsTableConstraints,
-            deleteAllTables
+            deleteAllTables,
+            specializationTableCreate
       }

@@ -1,12 +1,12 @@
 import {pool} from "../database/database.js"
 
-async function usersCreateModel({name, email, role, password}) {
+async function usersCreateModel({name, email, role, password_h}) {
       
-      const query = `INSERT INTO users (name, email, role, password)
+      const query = `INSERT INTO users (name, email, role, password_h)
                         VALUES ($1, $2, $3, $4)
                         RETURNING id`
       
-      const values = [name, email, role, password]
+      const values = [name, email, role, password_h]
       
       try {
             const result = await pool.query(query, values)
@@ -19,7 +19,7 @@ async function usersCreateModel({name, email, role, password}) {
 
 async function userGetByEmail({email}) {
 
-      const query = `SELECT id, email 
+      const query = `SELECT id, password_h, role 
                         FROM users
                         WHERE email = $1`
 
@@ -34,4 +34,37 @@ async function userGetByEmail({email}) {
       }
 }
 
-export { usersCreateModel, userGetByEmail }
+async function userGetById({id}) {
+      
+      const query = `SELECT name, email, role
+                        FROM users
+                        WHERE id = $1`
+      
+      const values = [id]
+
+      try {
+            const result = await pool.query(query, values)
+            return result
+      }
+      catch (error) {
+            console.log("Error geting user by id", error)
+      }
+}
+
+async function userDelete({id}) {
+
+      const query = `DELETE FROM users
+                        WHERE id = $1`
+
+      const values = [id]                  
+      try {
+            const result = await pool.query(query, values)
+            return result
+      }
+      catch (error) {
+            console.log("Error deleting user")
+      }
+}
+
+
+export { usersCreateModel, userGetByEmail, userGetById, userDelete }

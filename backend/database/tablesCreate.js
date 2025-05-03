@@ -7,6 +7,7 @@ import {
       mechanicsTableConstraints,
       servicesTableConstraints,
       ratingsTableConstraints,
+      specializationTableCreate,
       deleteAllTables
 } from '../models/tablesModels.js'
 
@@ -15,6 +16,7 @@ async function createTables() {
             await deleteAllTables()
             await mechanicsTableCreate()
             await servicesTableCreate()
+            await specializationTableCreate()
             await citiesTableCreate()
             await usersTableCreate()
             await ratingsTableCreate()
