@@ -1,7 +1,7 @@
 import app from "./app.js";
 import dotenv from 'dotenv'
 import { connectionTest } from '../database/database.js'
-dotenv.config()
+import createTables from "../database/tablesCreate.js";
 
 const {
       PORT,
@@ -10,8 +10,8 @@ const {
 
 async function startServer() {
       try {
-            await connectionTest()
-
+            // await connectionTest()
+            // createTables()
             app.listen(PORT, () => {
                   console.log(`Server started at http://${HOST}:${PORT}`)
             })

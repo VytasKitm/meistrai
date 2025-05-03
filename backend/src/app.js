@@ -1,6 +1,11 @@
-import express from 'express'
+import express, { json } from 'express'
 import cors from 'cors'
+import errorHandler from '../middlewares/errorHandler.js'
 import morgan from 'morgan'
+import citiesRouter from '../routes/citiesRouter.js'
+import mechanicsRouter from '../routes/mechanicsRouter.js'
+import serviceRouter from '../routes/serviceRouter.js'
+import userRouter from '../routes/userRouter.js'
 
 const app = express()
 
@@ -10,15 +15,17 @@ app.use(
       )
 )
 
+app.use(express.json())
+
+app.use("/cities", citiesRouter)
+app.use("/mechanics", mechanicsRouter)
+app.use("/services", serviceRouter)
+app.use("/users", userRouter)
+
 app.use(cors())
 
 app.use(express.json())
 
-app.use((error, res) => {
-      console.log(error)
-      res   
-            .status(error.status || 500)
-            .json({error: error.message || "Server error /src/app.js"})
-})
+app.use(errorHandler)
 
 export default app
