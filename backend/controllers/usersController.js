@@ -20,7 +20,7 @@ async function userCreate(req, res, next) {
                   name,
                   email,
                   role: "user",
-                  password: hashed_psw
+                  password_h: hashed_psw
             })
 
             res.status(200).json(user_id.rows[0].id)
@@ -31,34 +31,37 @@ async function userCreate(req, res, next) {
 }
 
 async function userLogin(req, res, next) {
-      const {email, password_login} = req.body
+      const {email, password} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
 
-      if (!email || !password_login) {
+      if (!email || !password) {
             const error = new Error("Blogi prisijungimo duomenys")
+            error.status = 400
             return next(error)
       }
 
       try {
-            const  rows  = await userGetByEmail(email)
+            const  {rows} = await userGetByEmail({email})
             console.log(rows)
       
-            if (!rows) {
+            if (rows.length === 0) {
                   const error = new Error("Tokio vartotojo nera")
+                  error.status = 401
                   return next(error)
             }
       
-            const {id, password} = rows[0]
+            const {id, password_h, role} = rows[0]
       
-            const check = await bcrypt.compare(password_login, password)
+            const check = await bcrypt.compare(password, password_h)
       
             if (!check) {
                   const error = new Error("Wrong password")
+                  error.status = 401
                   return next(error)
             }
 
             const token = jwt.sign(
-                  {userId: id},
+                  {userId: id, userRole: role},
                   process.env.JWT_SECRET,
                   {expiresIn: '1h'}
             )
