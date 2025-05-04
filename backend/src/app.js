@@ -15,6 +15,8 @@ app.use(
       )
 )
 
+app.use(cors())
+
 app.use(express.json())
 
 app.use("/cities", citiesRouter)
@@ -22,7 +24,7 @@ app.use("/mechanics", mechanicsRouter)
 app.use("/services", serviceRouter)
 app.use("/users", userRouter)
 
-app.use(cors())
+
 
 app.use(express.json())
 

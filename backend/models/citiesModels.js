@@ -13,9 +13,23 @@ async function cityCreateModel({name}) {
             return result
       }
       catch(error) {
-            console.log("Error writing city to database", error)
+            console.log("Error writing city to database", error.detail)
       }
       
 }
 
-export { cityCreateModel }
+async function cityDeleteModel({id}) {
+      const query = `DELETE FROM cities
+                        WHERE id = $1`
+
+      const values = [id]
+      try {
+            const result = await pool.query(query, values)
+            return result
+      }
+      catch (error) {
+            console.log("Error deleting city", error.detail)
+      }
+}
+
+export { cityCreateModel, cityDeleteModel }
