@@ -1,5 +1,5 @@
-import { usersCreateModel,
-         userGetByEmail   
+import {    userCreateModel,
+            userGetByEmailModel   
  } from "../models/usersModel.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -16,7 +16,7 @@ async function userCreate(req, res, next) {
             const salt = await bcrypt.genSalt(10)
             const hashed_psw = await bcrypt.hash(password, salt)
 
-            const user_id = await usersCreateModel({
+            const user_id = await userCreateModel({
                   name,
                   email,
                   role: "user",
@@ -41,7 +41,7 @@ async function userLogin(req, res, next) {
       }
 
       try {
-            const  {rows} = await userGetByEmail({email})
+            const  {rows} = await userGetByEmailModel({email})
             console.log(rows)
       
             if (rows.length === 0) {

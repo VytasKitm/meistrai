@@ -1,6 +1,6 @@
 import {pool} from "../database/database.js"
 
-async function usersCreateModel({name, email, role, password_h}) {
+async function userCreateModel({name, email, role, password_h}) {
       
       const query = `INSERT INTO users (name, email, role, password_h)
                         VALUES ($1, $2, $3, $4)
@@ -13,11 +13,11 @@ async function usersCreateModel({name, email, role, password_h}) {
             return result
       }
       catch (error) {
-            console.log("Error writing user to database", error)
+            console.log("Error writing user to database", error.detail)
       }
 }
 
-async function userGetByEmail({email}) {
+async function userGetByEmailModel({email}) {
 
       const query = `SELECT id, password_h, role 
                         FROM users
@@ -30,11 +30,11 @@ async function userGetByEmail({email}) {
             return result
       }
       catch (error) {
-            console.log("Error geting user by email", error)
+            console.log("Error geting user by email", error.detail)
       }
 }
 
-async function userGetById({id}) {
+async function userGetByIdModel({id}) {
       
       const query = `SELECT name, email, role
                         FROM users
@@ -47,11 +47,11 @@ async function userGetById({id}) {
             return result
       }
       catch (error) {
-            console.log("Error geting user by id", error)
+            console.log("Error geting user by id", error.detail)
       }
 }
 
-async function userDelete({id}) {
+async function userDeleteModel({id}) {
 
       const query = `DELETE FROM users
                         WHERE id = $1`
@@ -62,9 +62,9 @@ async function userDelete({id}) {
             return result
       }
       catch (error) {
-            console.log("Error deleting user")
+            console.log("Error deleting user", error.detail)
       }
 }
 
 
-export { usersCreateModel, userGetByEmail, userGetById, userDelete }
+export { userCreateModel, userGetByEmailModel, userGetByIdModel, userDeleteModel }
