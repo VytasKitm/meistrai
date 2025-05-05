@@ -8,9 +8,10 @@ export const AuthorizationProvider = ({children}) => {
       const [user, setUser] = useState(null)
 
       async function login(email, password) {
-            const res = loginUserAPI({email, password})
+            const res = await loginUserAPI(email, password)
+            console.log(res)
             if (res.status === 200) {
-                  const {token} = await res.json()
+                  const {token} = res.data
                   localStorage.setItem('token', token)
 
                   const {userId, userRole} = jwtDecode
@@ -20,7 +21,7 @@ export const AuthorizationProvider = ({children}) => {
 
       return (
             <AuthorizationContext.Provider value={{user, login}}>
-                  {Children}
+                  {children}
             </AuthorizationContext.Provider>
       )
 }
