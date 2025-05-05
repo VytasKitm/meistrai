@@ -12,7 +12,7 @@ async function startServer() {
       try {
             // await connectionTest()
             // createTables()
-            app.listen(PORT, () => {
+            app.listen(PORT, HOST, () => {
                   console.log(`Server started at http://${HOST}:${PORT}`)
             })
       } 
