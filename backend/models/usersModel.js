@@ -44,7 +44,7 @@ async function userGetByIdModel({id}) {
 
       try {
             const result = await pool.query(query, values)
-            return result
+            return result.rows[0]
       }
       catch (error) {
             console.log("Error geting user by id", error.detail)

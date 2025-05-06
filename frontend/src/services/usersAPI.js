@@ -11,4 +11,19 @@ const loginUserAPI = async (email, password) => {
       }
 }
 
-export {loginUserAPI}
+
+const infoUserAPI = async (id) => {
+      try {
+            const res = await axios.get(`http://localhost:3000/users/${id}`)
+            console.log(res.data)
+            return res.data
+      }
+      catch (error) {
+            console.log("Error geting user (infoUserAPI", error)
+            throw error
+      }
+}
+
+
+
+export {loginUserAPI, infoUserAPI}
