@@ -42,7 +42,7 @@ async function userLogin(req, res, next) {
 
       try {
             const  {rows} = await userGetByEmailModel({email})
-            console.log(rows)
+            // console.log("userGetByEmail:",rows)
       
             if (rows.length === 0) {
                   const error = new Error("Tokio vartotojo nera")

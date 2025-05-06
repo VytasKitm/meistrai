@@ -28,7 +28,7 @@ async function submitCityFunction(event) {
 
 return (
 	<>
-	<Form onSubmit={submitCityFunction} data-bs-theme="dark">
+	<Form onSubmit={submitCityFunction} data-bs-theme="dark" className='position-absolute top-50 start-50 translate-middle vh-20 component p-5'>
 		<Form.Group className="mb-3">
 			<Form.Label>City</Form.Label>
 			<Form.Control onChange={e => setCityF("name", e.target.value)}type="text" placeholder="Enter city" value={cityName.name} />

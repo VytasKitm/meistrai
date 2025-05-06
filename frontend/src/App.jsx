@@ -1,14 +1,19 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./styles.scss"
+import './App.css'
 import { CityCreate } from './components/CityCreate'
 import { LoginForm } from './components/LoginForm'
 import { AuthorizationContext, AuthorizationProvider } from './context/AuthorizationProvider'
+import { NavbarComp } from './components/NavbarComp'
+import { Layout } from './components/Layout'
+import { Homepage } from './pages/homepage/Homepage'
+
 
 function AuthUserRoute({children}) {
      const { user } = useContext(AuthorizationContext)
+     console.log("authUserRoute: ", user)
      if (!user) {
           return <Navigate to="/login" replace/>
      }
@@ -17,16 +22,23 @@ function AuthUserRoute({children}) {
 
 
 function App() {
-     return (
-          <AuthorizationProvider>
-               <BrowserRouter>
-                    <Routes>
-                         <Route path='/login' element={<LoginForm/>}/>
-                    </Routes>
-                    {/* <LoginForm/> */}
-               </BrowserRouter>
-               {/* <CityCreate/> */}
-          </AuthorizationProvider>
+     	return (
+	
+		<BrowserRouter>
+		
+          		<AuthorizationProvider>
+                    	<Routes>
+                         	<Route path='/login' element={<LoginForm/>}/>
+					<Route path='/' element={<AuthUserRoute><Layout/></AuthUserRoute>}>
+						<Route index element={<Homepage/>} />
+
+					
+					</Route>
+                    	</Routes>
+                    	{/* <LoginForm/> */}
+          		</AuthorizationProvider>
+               	{/* <CityCreate/> */}
+            </BrowserRouter>
     
      )
 }
