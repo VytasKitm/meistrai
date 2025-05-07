@@ -27,6 +27,9 @@ async function userCreate(req, res, next) {
             res.status(200).json(user.rows[0].id)
       }
       catch (error) {
+            if (error.code === '23505') {
+                  return res.status(409).json({error: 'Email already exists', code: '23505'})
+            }
             next(error)
       }
 }

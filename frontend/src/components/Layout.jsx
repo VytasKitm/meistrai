@@ -1,11 +1,11 @@
 import React from 'react'
 import {Outlet} from 'react-router-dom'
-import { NavbarComp } from './NavbarComp'
+import { NavbarUser } from './NavbarUser'
 
 export const Layout = () => {
   return (
     <>
-      <NavbarComp/>
+      <NavbarUser/>
 
       <Outlet/>
 

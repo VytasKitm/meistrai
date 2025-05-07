@@ -5,7 +5,7 @@ import authenticateAdmin from '../middlewares/authenticateAdmin.js'
 
 const userRouter = express.Router()
 
-userRouter.route("/").post(userCreate)
+userRouter.route("/create").post(userCreate)
 userRouter.route("/:id").get(userGet)
 userRouter.route("/login").post(userLogin)
 userRouter.route("/protected").get(authenticateUser, authenticateAdmin)

@@ -1,10 +1,14 @@
 import pg from 'pg'
 import path from 'path'
+import fs from 'fs'
 import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
+
 dotenv.config({
       path: path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../.env')
 })
+
+const fileData = fs.readFileSync("./database/mockData.sql", "utf-8")
 
 const {DATABASE_URL} = process.env
 
@@ -40,4 +44,13 @@ async function connectionTest() {
       }
 }
 
-export {pool, connectionTest}
+const testData = async () => {
+      try {
+            await pool.query(fileData)
+      }
+      catch (error) {
+            console.log("Duomenu irasymas nepavyko", error)
+      }
+}
+
+export {pool, connectionTest, testData}

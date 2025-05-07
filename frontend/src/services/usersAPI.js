@@ -24,6 +24,11 @@ const infoUserAPI = async (id) => {
       }
 }
 
+const createUserAPI = async (name, email, password) => {
+            const res = await axios.post('http://localhost:3000/users/create', {name, email, password})
+            return res
+}
 
 
-export {loginUserAPI, infoUserAPI}
+
+export {loginUserAPI, infoUserAPI, createUserAPI}

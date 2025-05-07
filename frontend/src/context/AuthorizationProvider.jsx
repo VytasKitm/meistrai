@@ -24,7 +24,13 @@ export const AuthorizationProvider = ({children}) => {
       })
 
       async function login(email, password) {
-            const res = await loginUserAPI(email, password)
+            let res
+            try {
+                  res = await loginUserAPI(email, password)
+            }
+            catch (error) {
+                  throw error
+            }
             // console.log(res)
             if (res.status === 200) {
 

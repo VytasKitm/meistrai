@@ -14,6 +14,7 @@ async function userCreateModel({name, email, role, password_h}) {
       }
       catch (error) {
             console.log("Error writing user to database", error.detail)
+            throw(error)
       }
 }
 
