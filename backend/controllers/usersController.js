@@ -1,5 +1,6 @@
 import {    userCreateModel,
-            userGetByEmailModel   
+            userGetByEmailModel,   
+            userGetByIdModel
  } from "../models/usersModel.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -16,16 +17,19 @@ async function userCreate(req, res, next) {
             const salt = await bcrypt.genSalt(10)
             const hashed_psw = await bcrypt.hash(password, salt)
 
-            const user_id = await userCreateModel({
+            const user = await userCreateModel({
                   name,
                   email,
                   role: "user",
                   password_h: hashed_psw
             })
 
-            res.status(200).json(user_id.rows[0].id)
+            res.status(200).json(user.rows[0].id)
       }
       catch (error) {
+            if (error.code === '23505') {
+                  return res.status(409).json({error: 'Email already exists', code: '23505'})
+            }
             next(error)
       }
 }
@@ -42,7 +46,7 @@ async function userLogin(req, res, next) {
 
       try {
             const  {rows} = await userGetByEmailModel({email})
-            console.log(rows)
+            // console.log("userGetByEmail:",rows)
       
             if (rows.length === 0) {
                   const error = new Error("Tokio vartotojo nera")
@@ -73,4 +77,27 @@ async function userLogin(req, res, next) {
       }
 }
 
-export {userCreate, userLogin}
+async function userGet(req, res, next) {
+      const {id} = req.params
+      console.log(`req.body: ${JSON.stringify(req.params)}`)
+      try {
+            if (!id) {
+                  const error = new Error("Nera id")
+                  return next(error)
+            }
+
+            const user = await userGetByIdModel({id})
+            console.log("userGet:", user)
+            res.status(200).json({
+                  user_name: user.name,
+                  user_email: user.email
+            })
+      }
+      catch (error) {
+            next(error)
+      }
+}
+
+
+
+export {userCreate, userLogin, userGet}

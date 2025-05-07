@@ -1,3 +1,4 @@
+
 import {
       mechanicsTableCreate,
       servicesTableCreate,
@@ -10,6 +11,7 @@ import {
       specializationTableCreate,
       deleteAllTables
 } from '../models/tablesModels.js'
+
 
 async function createTables() {
       try {
