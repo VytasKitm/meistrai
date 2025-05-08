@@ -7,7 +7,7 @@ import {NavLink} from 'react-router-dom'
 import { AuthorizationContext } from '../context/AuthorizationProvider'
 import { infoUserAPI } from '../services/usersAPI'
 
-export const NavbarUser = () => {
+export const NavbarAdmin = () => {
 	const {user, logout} = useContext(AuthorizationContext)
 	const [user_name, setUser_name] = useState("")
 
@@ -24,13 +24,15 @@ export const NavbarUser = () => {
 	return (
 	<Navbar expand="lg" fixed="top" className="bg-body-tertiary" bg="dark" data-bs-theme="dark">
       	<Container fluid>
-			<Navbar.Brand>Mechanics</Navbar.Brand>
+			<Navbar.Brand>Admin Panel</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav"> 
 					<Nav className="me-auto" variant="tabs" defaultActiveKey="/home">
 						<Nav.Link as={NavLink} to="/home">Home</Nav.Link>
-						<Nav.Link as={NavLink} to="/favorites">Favorites</Nav.Link>
-						<Nav.Link as={NavLink} to="/filters">Filters</Nav.Link>
+						<Nav.Link as={NavLink} to="/mechanics">Mechanics</Nav.Link>
+						<Nav.Link as={NavLink} to="/users">Users</Nav.Link>
+                                                <Nav.Link as={NavLink} to="/services">Services</Nav.Link>
+						<Nav.Link as={NavLink} to="/cities">Cities</Nav.Link>
 						{user.role === "admin" && (<Nav.Link as={NavLink} to="/admin">Admin Panel</Nav.Link>)}
 					</Nav>
 					<Nav className="ms-auto" variant="pills">	
