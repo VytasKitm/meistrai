@@ -2,7 +2,8 @@ import {    userCreateModel,
             userGetByEmailModel,   
             userGetByIdModel,
             userGetAllModel,
-            userDeleteModel
+            userDeleteModel,
+            userEditModel
  } from "../models/usersModel.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -69,7 +70,7 @@ async function userLogin(req, res, next) {
             const token = jwt.sign(
                   {userId: id, userRole: role},
                   process.env.JWT_SECRET,
-                  {expiresIn: '1h'}
+                  {expiresIn: '24h'}
             )
 
             res.status(200).json({token})
@@ -80,6 +81,7 @@ async function userLogin(req, res, next) {
 }
 
 async function userGet(req, res, next) {
+      console.log(req.params)
       const {id} = req.params
       console.log(`req.body: ${JSON.stringify(req.params)}`)
       try {
@@ -101,7 +103,6 @@ async function userGet(req, res, next) {
 }
 
 async function userGetAll(req, res, next) {
-      
       try {
             const users = await userGetAllModel()
             console.log("userGetAll", users)
@@ -122,8 +123,52 @@ async function userDelete(req, res, next) {
                   return next(error)
             }
 
-            const res = await userDeleteModel({id})
-            console.log("userDeleted: ", res)
+            const result = await userDeleteModel({id})
+
+            if (result.rowCount === 0) {
+                  const error = new Error("User dont exists")
+                  error.status = 404
+                  throw error
+            }
+
+            return res.status(204).end()
+      }
+      catch (error) {
+            console.error("userDelete error: ", error)
+            next(error)
+      }
+}
+
+async function userEdit(req, res, next) {
+       const {id, name, email, role, password} = req.body
+      console.log(`req.body: ${JSON.stringify(req.body)}`)
+      try {
+            if (!id ||
+                !name ||
+                !email ||
+                !role) {
+                  
+                  const error = new Error("Blogi user duomenys")
+                  return next(error)
+            }
+
+            let hashed_psw = null
+
+            if (password) {
+                  const salt = await bcrypt.genSalt(10)
+                  hashed_psw = await bcrypt.hash(password, salt)
+            }
+
+            const result = await userEditModel({
+                  id,
+                  name,
+                  email,
+                  role,
+                  password_h: hashed_psw
+            })
+            console.log("userEdit: ", result.rowCount)
+
+            res.status(200).end()
       }
       catch (error) {
             next(error)
@@ -132,4 +177,4 @@ async function userDelete(req, res, next) {
 
 
 
-export {userCreate, userLogin, userGet, userGetAll, userDelete}
+export {userCreate, userLogin, userGet, userGetAll, userDelete, userEdit}

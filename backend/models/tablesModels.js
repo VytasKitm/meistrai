@@ -139,10 +139,12 @@ async function ratingsTableConstraints() {
       const query = `ALTER TABLE IF EXISTS ratings
                         DROP CONSTRAINT IF EXISTS FK_ratings_users,
                         ADD CONSTRAINT FK_ratings_users
-                              FOREIGN KEY (users_id) REFERENCES users(id),
+                              FOREIGN KEY (users_id) REFERENCES users(id)
+                              ON DELETE CASCADE,
                         DROP CONSTRAINT IF EXISTS FK_ratings_mechanics,
                         ADD CONSTRAINT FK_ratings_mechanics
-                              FOREIGN KEY (mechanics_id) REFERENCES mechanics (id)`
+                              FOREIGN KEY (mechanics_id) REFERENCES mechanics (id)
+                              ON DELETE CASCADE`
                         
       try {
             await pool.query(query)

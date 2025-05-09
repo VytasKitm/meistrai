@@ -6,8 +6,6 @@ async function authenticateUser(req, res, next) {
             return res.status(401).json({message: "Blogas headeris"})
       }
       const token = auth.split(' ')
-      console.log(token[1])
-      console.log(process.env.JWT_SECRET)
 
       try {
             const payload  = jwt.verify(token[1], process.env.JWT_SECRET)

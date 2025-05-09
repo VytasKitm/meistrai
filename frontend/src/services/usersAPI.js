@@ -37,20 +37,30 @@ const getAllUsersAPI = async () => {
 }
 
 const deleteUserAPI = async (id) => {
-      const token = localStorage.getItem('token')
-      const res = await axios.delete(`http://localhost:3000/users/delete/${id}`,
-      {
-            headers: {
-                  Authorization: `Bearer ${token}`
-            }
-      })
-      
-      console.log("deleteUserAPI: ", res)
-      return res
+      try {
+            console.log(id)
+            const token = localStorage.getItem('token')
+            const res = await axios.delete(`http://localhost:3000/users/delete/${id}`,
+            {
+                  headers: {
+                        Authorization: `Bearer ${token}`
+                  }
+            })
+            return res
+      }
+      catch (error) {
+            console.log("deleteUserAPI: ", error)
+      } 
 }
 
-const updateUserAPI = async (id, name, email) => {
-      const res = await axios.put('http://localhost:3000/users/update', {id, name, email})
+const updateUserAPI = async ({id, name, email, role, password}) => {
+      const token = localStorage.getItem('token')
+      const res = await axios.put('http://localhost:3000/users/update', {id, name, email, role, password},
+      {
+            headers: {
+                        Authorization: `Bearer ${token}`
+                  }
+      })
       console.log("updateUserAPI: ", res)
       return res
 }

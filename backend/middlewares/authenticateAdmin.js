@@ -1,5 +1,5 @@
 function authenticateAdmin(req, res, next) {
-      const {role} = req.user
+      const {id, role} = req.user
       console.log(`Admin authentication: id: ${id}, role: ${role} `)
       if (role === "admin") {
             next()
