@@ -27,13 +27,13 @@ export const NavbarAdmin = () => {
 			<Navbar.Brand>Admin Panel</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav"> 
-					<Nav className="me-auto" variant="tabs" defaultActiveKey="/home">
+					<Nav className="me-auto" variant="tabs" defaultActiveKey="/admin/Mechanics">
 						<Nav.Link as={NavLink} to="/home">Home</Nav.Link>
-						<Nav.Link as={NavLink} to="/mechanics">Mechanics</Nav.Link>
-						<Nav.Link as={NavLink} to="/users">Users</Nav.Link>
-                                                <Nav.Link as={NavLink} to="/services">Services</Nav.Link>
-						<Nav.Link as={NavLink} to="/cities">Cities</Nav.Link>
-						{user.role === "admin" && (<Nav.Link as={NavLink} to="/admin">Admin Panel</Nav.Link>)}
+						<Nav.Link as={NavLink} to="/admin/mechanics">Mechanics</Nav.Link>
+						<Nav.Link as={NavLink} to="/admin/users">Users</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/admin/services">Services</Nav.Link>
+						<Nav.Link as={NavLink} to="/admin/cities">Cities</Nav.Link>
+						{/* {user.role === "admin" && (<Nav.Link as={NavLink} to="/admin">Admin Panel</Nav.Link>)} */}
 					</Nav>
 					<Nav className="ms-auto" variant="pills">	
 						<Navbar.Text>

@@ -3,6 +3,7 @@ import axios from 'axios'
 const loginUserAPI = async (email, password) => {
       try {
             const res = await axios.post('http://localhost:3000/users/login', {email, password})
+            console.log("loginUserAPI:",res)
             return res
       }
       catch (error) {
@@ -15,7 +16,7 @@ const loginUserAPI = async (email, password) => {
 const infoUserAPI = async (id) => {
       try {
             const res = await axios.get(`http://localhost:3000/users/${id}`)
-            console.log(res.data)
+            console.log("infoUserAPI: ",res.data)
             return res.data
       }
       catch (error) {
@@ -29,6 +30,30 @@ const createUserAPI = async (name, email, password) => {
             return res
 }
 
+const getAllUsersAPI = async () => {
+      const res = await axios.get('http://localhost:3000/users/get')
+      console.log("getAllUsersAPI: ",res)
+      return res.data
+}
+
+const deleteUserAPI = async (id) => {
+      const token = localStorage.getItem('token')
+      const res = await axios.delete(`http://localhost:3000/users/delete/${id}`,
+      {
+            headers: {
+                  Authorization: `Bearer ${token}`
+            }
+      })
+      
+      console.log("deleteUserAPI: ", res)
+      return res
+}
+
+const updateUserAPI = async (id, name, email) => {
+      const res = await axios.put('http://localhost:3000/users/update', {id, name, email})
+      console.log("updateUserAPI: ", res)
+      return res
+}
 
 
-export {loginUserAPI, infoUserAPI, createUserAPI}
+export {loginUserAPI, infoUserAPI, createUserAPI, getAllUsersAPI, deleteUserAPI, updateUserAPI}

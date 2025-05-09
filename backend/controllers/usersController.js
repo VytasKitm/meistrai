@@ -1,6 +1,8 @@
 import {    userCreateModel,
             userGetByEmailModel,   
-            userGetByIdModel
+            userGetByIdModel,
+            userGetAllModel,
+            userDeleteModel
  } from "../models/usersModel.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -98,6 +100,36 @@ async function userGet(req, res, next) {
       }
 }
 
+async function userGetAll(req, res, next) {
+      
+      try {
+            const users = await userGetAllModel()
+            console.log("userGetAll", users)
+            res.status(200).json(users)
+      }
+      catch (error) {
+            next(error)
+      }
+}
+
+async function userDelete(req, res, next) {
+      const {id} = req.params
+      console.log(`req.body: ${JSON.stringify(req.params)}`)
+
+      try {
+            if (!id) {
+                  const error = new Error("Truksta id")
+                  return next(error)
+            }
+
+            const res = await userDeleteModel({id})
+            console.log("userDeleted: ", res)
+      }
+      catch (error) {
+            next(error)
+      }
+}
 
 
-export {userCreate, userLogin, userGet}
+
+export {userCreate, userLogin, userGet, userGetAll, userDelete}

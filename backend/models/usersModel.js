@@ -35,6 +35,21 @@ async function userGetByEmailModel({email}) {
       }
 }
 
+async function userGetAllModel() {
+
+      const query = `SELECT id, name, email, role
+                        FROM users
+                        ORDER BY name ASC`
+      
+      try {
+            const result = await pool.query(query)
+            return result.rows
+      }
+      catch (error) {
+            console.log("Error getting all users from db", error.detail)
+      }
+}
+
 async function userGetByIdModel({id}) {
       
       const query = `SELECT name, email, role
@@ -68,4 +83,4 @@ async function userDeleteModel({id}) {
 }
 
 
-export { userCreateModel, userGetByEmailModel, userGetByIdModel, userDeleteModel }
+export { userCreateModel, userGetByEmailModel, userGetByIdModel, userDeleteModel, userGetAllModel }

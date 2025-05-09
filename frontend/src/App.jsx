@@ -6,12 +6,13 @@ import './App.css'
 
 import { Login } from './pages/login/Login'
 import { AuthorizationContext, AuthorizationProvider } from './context/AuthorizationProvider'
-import { Layout } from './components/Layout'
+import { UserLayout } from './components/UserLayout'
 import { Homepage } from './pages/homepage/Homepage'
 import { Admin } from './pages/admin/Admin'
 import { Favorites } from './pages/favorites/Favorites'
 import { Filters } from './pages/filters/Filters'
 
+import { AdminLayout } from './components/AdminLayout'
 import { Mechanics } from './pages/mechanics/Mechanics'
 import { Users } from './pages/users/Users'
 import { Services } from './pages/services/Services'
@@ -44,12 +45,12 @@ function App() {
           <AuthorizationProvider>
                <Routes>
                     <Route path='/login' element={<Login/>}/>
-                    <Route path='/' element={<AuthUserRoute><Layout/></AuthUserRoute>}>
+                    <Route path='/' element={<AuthUserRoute><UserLayout/></AuthUserRoute>}>
                          <Route index element={<Homepage/>} />
                          <Route path='/home' index element={<Homepage/>} />
                          <Route path='/favorites' element={<Favorites/>} />
                          <Route path='/filters' element={<Filters/>} />
-                         <Route path='/admin' element={<AuthAdminRoute><Admin/></AuthAdminRoute>} >
+                         <Route path='/admin' element={<AuthAdminRoute><AdminLayout/></AuthAdminRoute>} >
                               <Route index element={<Mechanics/>} />
                               <Route path='/admin/mechanics' element={<Mechanics/>} />
                               <Route path='/admin/users' element={<Users/>} />
