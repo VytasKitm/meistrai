@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react'
-import { getAllUsersAPI } from '../../services/usersAPI'
+import { createUserAPI, getAllUsersAPI } from '../../services/usersAPI'
 import Button from 'react-bootstrap/Button'
 import { UsersTable } from './UsersTable'
-import { deleteUserAPI, updateUserAPI, infoUserAPI } from '../../services/usersAPI'
+import { deleteUserAPI, updateUserAPI, createUserAdminAPI } from '../../services/usersAPI'
 import { UserEdit } from './UserEdit'
+import { UserCreate } from './UserCreate'
 
 export const Users = () => {
   	const [users, setUsers] = useState([])
-	const [editState, setEditState] = useState(false)
+	const [pageState, setPageState] = useState(null)
 	const [editUser, setEditUser] = useState(null)
 
 	useEffect(() => {
@@ -19,16 +20,18 @@ export const Users = () => {
 		const usersRes = await getAllUsersAPI()
 		console.log(users)
 		setUsers(usersRes)
+		setPageState("table")
   		}
 
 	function findEditUser(id) {
 		const editUser = users.find((user) => user.id === id)
 		setEditUser(editUser)
-		setEditState(true)
+		setPageState("edit")
 	}
 
-	function test() {
-		console.log(editUser)
+	async function createUser(name, email, role, password) {
+		await createUserAdminAPI(name, email, role, password)
+		getAllUsers()
 	}
 
 
@@ -56,12 +59,16 @@ export const Users = () => {
 
 	return (
         	<div className='position-relative h-100 v-100 mt-5' >
-          		<Button onClick={test}> Get All Users</Button>
-			<Button onClick={() => setEditState(true)}> Edit page</Button>
+          		{/* <Button onClick={test}> Get All Users</Button>
+			<Button onClick={() => setPageState("edit")}> Edit page</Button> */}
 
-			{editState ? 
-				(<UserEdit editUser={editUser} userUpdate={userUpdate} setEditState={setEditState}/>) :
-				(<UsersTable users={users} userDelete={userDelete} findEditUser={findEditUser}/>)
+			{pageState === "edit" ? 
+				(<UserEdit editUser={editUser} userUpdate={userUpdate} setPageState={setPageState}/>) :
+			pageState === "table" ?
+				(<UsersTable users={users} userDelete={userDelete} findEditUser={findEditUser} setPageState={setPageState}/>) :
+			pageState === "create" ?
+				(<UserCreate createUser={createUser} setPageState={setPageState}/>) :
+				(<></>)
 			}
 			
         	</div>

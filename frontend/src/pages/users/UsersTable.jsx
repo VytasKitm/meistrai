@@ -3,10 +3,12 @@ import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
 import { ActionSelect } from './ActionSelect'
 
-export const UsersTable = ({users, userDelete, findEditUser}) => {
+export const UsersTable = ({users, userDelete, findEditUser, setPageState}) => {
   	return (
-    		<div data-bs-theme="dark" className='position-absolute top-50 start-50 translate-middle vh-20 component p-4'>
-			<Table striped bordered hover>
+    		<div data-bs-theme="dark" className='position-absolute top-50 start-50 translate-middle component p-4' style={{width: "50rem"}}>
+		<h3>Users table</h3>
+            <br />
+			<Table striped bordered hover >
 				<thead>
 				<tr>
 				<th>#</th>
@@ -29,8 +31,8 @@ export const UsersTable = ({users, userDelete, findEditUser}) => {
 				))}
     			</Table>
 			
-			<Button variant="primary" type="button">
-                        Clear
+			<Button onClick={() => setPageState("create")} variant="primary" type="button" size="sm">
+                        Add User
                   </Button>
 			
 

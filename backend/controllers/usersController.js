@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 async function userCreate(req, res, next) {
-      const {name, email, password} = req.body
+      const {name, email, role, password} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
             if (!name || !email || !password) {
@@ -20,10 +20,16 @@ async function userCreate(req, res, next) {
             const salt = await bcrypt.genSalt(10)
             const hashed_psw = await bcrypt.hash(password, salt)
 
+            let setRole = "user"
+
+            if (role) {
+                  setRole = role
+            }
+
             const user = await userCreateModel({
                   name,
                   email,
-                  role: "user",
+                  role: setRole,
                   password_h: hashed_psw
             })
 

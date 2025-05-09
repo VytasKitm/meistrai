@@ -3,18 +3,19 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
 import { Navigate } from 'react-router-dom'
+import { createUserAdminAPI } from '../../services/usersAPI'
 
 
-export const UserEdit = ({editUser, userUpdate, setPageState}) => {
-      const [name, setName] = useState(editUser.name)
-      const [email, setEmail] = useState(editUser.email)
-      const [role, setRole] = useState(editUser.role)
+export const UserCreate = ({createUser, setPageState}) => {
+      const [name, setName] = useState("")
+      const [email, setEmail] = useState("")
+      const [role, setRole] = useState("")
       const [password, setPassword] = useState("")
 
-      async function submitUpdate(event) {
+      async function submitCreate(event) {
             event.preventDefault()
-            userUpdate({...editUser, name, email, role, password})
-            setPageState("table")
+            createUser(name, email, role, password)
+            setPageState("create")
       }
 
       function clear() {
@@ -28,9 +29,9 @@ export const UserEdit = ({editUser, userUpdate, setPageState}) => {
       return (
       <>
       <div className='position-absolute top-50 start-50 translate-middle component p-4' data-bs-theme="dark">
-            <h3>Update User</h3>
+            <h3>Create User</h3>
             <br />
-            <Form onSubmit={submitUpdate}>
+            <Form onSubmit={submitCreate}>
                   <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label>Name</Form.Label>
                         <Form.Control onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" value={name} required/>
@@ -48,10 +49,10 @@ export const UserEdit = ({editUser, userUpdate, setPageState}) => {
 
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
-                        <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" value={password}/>
+                        <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" value={password} required/>
                   </Form.Group>
                   <Button variant="primary" type="submit" className='me-2'>
-                        Update
+                        Create
                   </Button>
                   <Button  onClick={clear} variant="primary" type="button" className='me-2'>
                         Clear
