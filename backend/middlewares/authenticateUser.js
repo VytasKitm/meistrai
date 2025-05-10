@@ -5,10 +5,10 @@ async function authenticateUser(req, res, next) {
       if(!auth || !auth.startsWith("Bearer ")) {
             return res.status(401).json({message: "Blogas headeris"})
       }
-      const token = auth.slice(7)
+      const token = auth.split(' ')
 
       try {
-            const payload  = jwt.verify(token, process.env.JWT_SECRET)
+            const payload  = jwt.verify(token[1], process.env.JWT_SECRET)
             req.user = {id: payload.userId, role: payload.userRole}
             console.log(payload)
             console.log(`User verified. id: ${payload.userId}. Role: ${payload.userRole}`)

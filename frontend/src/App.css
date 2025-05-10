@@ -1,15 +1,17 @@
 #root {
   /* max-width: 1920px;
   margin: 0 auto; */
-  padding: 2rem;
+  	padding: 2rem;
   /* text-align: center; */
-  background-color: #424242;
-  background-color: #242424;
+  	background-color: #424242;
+  	background-color: #242424;
   /* color: white; */
 }
 
 .component {
-  background-color: #424242;
+  	background-color: #424242;
+      box-shadow: 0 5px 25px -5px #000, 0 8px 10px -6px #000;
+	border-radius: 2%;
 }
 
 

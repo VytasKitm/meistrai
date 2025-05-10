@@ -19,9 +19,16 @@ export const RegForm = ({name, email, password, setName, setEmail, setPassword, 
                   setRegisterState("login")
             }
             catch (error) {
-                  if (error.response.status === 409 && error.response.data.code === '23505') {
+                  const status = error.response?.status
+                  const code = error.response?.data?.code
+
+                  if (status === 409 && code === '23505') {
                         setAlert("Toks email jau egzistuoja.")
                   }
+                  else {
+                        setAlert(error.message || "Error")
+                  }
+                  console.log(error)
             }
       }
 

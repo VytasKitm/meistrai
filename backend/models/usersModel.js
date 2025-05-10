@@ -35,6 +35,21 @@ async function userGetByEmailModel({email}) {
       }
 }
 
+async function userGetAllModel() {
+
+      const query = `SELECT id, name, email, role
+                        FROM users
+                        ORDER BY name ASC`
+      
+      try {
+            const result = await pool.query(query)
+            return result.rows
+      }
+      catch (error) {
+            console.log("Error getting all users from db", error.detail)
+      }
+}
+
 async function userGetByIdModel({id}) {
       
       const query = `SELECT name, email, role
@@ -67,5 +82,23 @@ async function userDeleteModel({id}) {
       }
 }
 
+async function userEditModel({id, name, email, role, password_h}) {
+      const query = `UPDATE ONLY users
+                        SET   name = $2,
+                              email = $3,
+                              role = $4,
+                              password_h = COALESCE($5, password_h)
+                        WHERE id = $1`
 
-export { userCreateModel, userGetByEmailModel, userGetByIdModel, userDeleteModel }
+      const values = [id, name, email, role, password_h]
+      try {
+            const result = await pool.query(query, values)
+            return result
+      }
+      catch (error) {
+            console.log("Error updating user", error)
+      }
+}
+
+
+export { userCreateModel, userGetByEmailModel, userGetByIdModel, userDeleteModel, userGetAllModel, userEditModel }

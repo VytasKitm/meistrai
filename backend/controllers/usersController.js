@@ -1,12 +1,15 @@
 import {    userCreateModel,
             userGetByEmailModel,   
-            userGetByIdModel
+            userGetByIdModel,
+            userGetAllModel,
+            userDeleteModel,
+            userEditModel
  } from "../models/usersModel.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 
 async function userCreate(req, res, next) {
-      const {name, email, password} = req.body
+      const {name, email, role, password} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
             if (!name || !email || !password) {
@@ -17,10 +20,16 @@ async function userCreate(req, res, next) {
             const salt = await bcrypt.genSalt(10)
             const hashed_psw = await bcrypt.hash(password, salt)
 
+            let setRole = "user"
+
+            if (role) {
+                  setRole = role
+            }
+
             const user = await userCreateModel({
                   name,
                   email,
-                  role: "user",
+                  role: setRole,
                   password_h: hashed_psw
             })
 
@@ -67,7 +76,7 @@ async function userLogin(req, res, next) {
             const token = jwt.sign(
                   {userId: id, userRole: role},
                   process.env.JWT_SECRET,
-                  {expiresIn: '1h'}
+                  {expiresIn: '24h'}
             )
 
             res.status(200).json({token})
@@ -78,6 +87,7 @@ async function userLogin(req, res, next) {
 }
 
 async function userGet(req, res, next) {
+      console.log(req.params)
       const {id} = req.params
       console.log(`req.body: ${JSON.stringify(req.params)}`)
       try {
@@ -98,6 +108,79 @@ async function userGet(req, res, next) {
       }
 }
 
+async function userGetAll(req, res, next) {
+      try {
+            const users = await userGetAllModel()
+            console.log("userGetAll", users)
+            res.status(200).json(users)
+      }
+      catch (error) {
+            next(error)
+      }
+}
+
+async function userDelete(req, res, next) {
+      const {id} = req.params
+      console.log(`req.body: ${JSON.stringify(req.params)}`)
+
+      try {
+            if (!id) {
+                  const error = new Error("Truksta id")
+                  return next(error)
+            }
+
+            const result = await userDeleteModel({id})
+
+            if (result.rowCount === 0) {
+                  const error = new Error("User dont exists")
+                  error.status = 404
+                  throw error
+            }
+
+            return res.status(204).end()
+      }
+      catch (error) {
+            console.error("userDelete error: ", error)
+            next(error)
+      }
+}
+
+async function userEdit(req, res, next) {
+       const {id, name, email, role, password} = req.body
+      console.log(`req.body: ${JSON.stringify(req.body)}`)
+      try {
+            if (!id ||
+                !name ||
+                !email ||
+                !role) {
+                  
+                  const error = new Error("Blogi user duomenys")
+                  return next(error)
+            }
+
+            let hashed_psw = null
+
+            if (password) {
+                  const salt = await bcrypt.genSalt(10)
+                  hashed_psw = await bcrypt.hash(password, salt)
+            }
+
+            const result = await userEditModel({
+                  id,
+                  name,
+                  email,
+                  role,
+                  password_h: hashed_psw
+            })
+            console.log("userEdit: ", result.rowCount)
+
+            res.status(200).end()
+      }
+      catch (error) {
+            next(error)
+      }
+}
 
 
-export {userCreate, userLogin, userGet}
+
+export {userCreate, userLogin, userGet, userGetAll, userDelete, userEdit}

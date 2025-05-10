@@ -4,7 +4,9 @@ import { RegForm } from '../../components/RegForm'
 import { NavbarLogin } from './NavbarLogin'
 import { AuthorizationContext } from '../../context/AuthorizationProvider'
 import { createUserAPI } from '../../services/usersAPI'
- 
+
+
+
 export const Login = () => {
 	const [email, setEmail] = useState("")
 	const [name, setName] = useState("")
@@ -31,7 +33,7 @@ export const Login = () => {
       }
 
 	async function submitRegister() {
-			await createUserAPI(name, email, password)
+			await createUserAPI(name, email, "", password)
 	}
 
 	function clear() {
