@@ -5,18 +5,12 @@ import { NavbarLogin } from './NavbarLogin'
 import { AuthorizationContext } from '../../context/AuthorizationProvider'
 import { createUserAPI } from '../../services/usersAPI'
 
-const user = {
-	name: "",
-	email: "",
-	role: "",
-	password: ""
-}
 
 
 export const Login = () => {
-	const [email, setEmail] = useState(user.email)
-	const [name, setName] = useState(user.name)
-	const [password, setPassword] = useState(user.password)
+	const [email, setEmail] = useState("")
+	const [name, setName] = useState("")
+	const [password, setPassword] = useState("")
 	const {login} = useContext(AuthorizationContext)
 	const [registerState, setRegisterState] = useState("login")
 
@@ -39,7 +33,7 @@ export const Login = () => {
       }
 
 	async function submitRegister() {
-			await createUserAPI({...user, name, email, password})
+			await createUserAPI(name, email, "", password)
 	}
 
 	function clear() {
