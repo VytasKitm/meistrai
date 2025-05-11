@@ -10,7 +10,7 @@ userRouter.route("/create/admin").post(authenticateUser, authenticateAdmin, user
 userRouter.route("/get").get(userGetAll)
 userRouter.route("/:id").get(userGet)
 userRouter.route("/login").post(userLogin)
-userRouter.route("/protected").get(authenticateUser, authenticateAdmin)
+// userRouter.route("/protected").get(authenticateUser, authenticateAdmin)
 userRouter.route("/delete/:id").delete(authenticateUser, authenticateAdmin, userDelete)
 userRouter.route("/update").put(authenticateUser, authenticateAdmin, userEdit)
 

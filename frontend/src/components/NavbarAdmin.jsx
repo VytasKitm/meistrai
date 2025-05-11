@@ -33,7 +33,7 @@ export const NavbarAdmin = () => {
 						<Nav.Link as={NavLink} to="/admin/users">Users</Nav.Link>
                                     <Nav.Link as={NavLink} to="/admin/services">Services</Nav.Link>
 						<Nav.Link as={NavLink} to="/admin/cities">Cities</Nav.Link>
-						{/* {user.role === "admin" && (<Nav.Link as={NavLink} to="/admin">Admin Panel</Nav.Link>)} */}
+						{/* {user.role === "admin" && (<Nav.Link as={NavLink} to="/admin/mechanics">Admin Panel</Nav.Link>)} */}
 					</Nav>
 					<Nav className="ms-auto" variant="pills">	
 						<Navbar.Text>

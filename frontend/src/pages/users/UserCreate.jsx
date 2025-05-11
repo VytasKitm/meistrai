@@ -2,8 +2,6 @@ import React, {useState} from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Alert from 'react-bootstrap/Alert'
-import { Navigate } from 'react-router-dom'
-import { createUserAdminAPI } from '../../services/usersAPI'
 
 
 export const UserCreate = ({createUser, setPageState}) => {
@@ -11,10 +9,26 @@ export const UserCreate = ({createUser, setPageState}) => {
       const [email, setEmail] = useState("")
       const [role, setRole] = useState("")
       const [password, setPassword] = useState("")
+      const [alert, setAlert] = useState("")
 
       async function submitCreate(event) {
-            event.preventDefault()
-            createUser(name, email, role, password)
+            setAlert("")
+            try {
+                  event.preventDefault()
+                  await createUser(name, email, role, password)
+            }
+            catch (error) {
+                  const status = error.response?.status
+                  const code = error.response?.data?.code
+
+                  if (status === 409 && code === '23505') {
+                        setAlert("Email already exists.")
+                  }
+                  else {
+                        setAlert(error.message || "Error")
+                  }
+                  console.log(error)
+            }
       }
 
       function clear() {
@@ -27,7 +41,7 @@ export const UserCreate = ({createUser, setPageState}) => {
 
       return (
       <>
-      <div className='position-absolute top-50 start-50 translate-middle component p-4' data-bs-theme="dark">
+      <div className='position-absolute top-50 start-50 translate-middle component p-4' style={{width: "35vw", maxHeight: "80vh", tableLayout: "auto"}} data-bs-theme="dark">
             <h3>Create User</h3>
             <br />
             <Form onSubmit={submitCreate}>
@@ -61,7 +75,7 @@ export const UserCreate = ({createUser, setPageState}) => {
                   </Button>
             </Form>
       </div>
-      {/* {alert && (<Alert variant="warning" className='mt-5 w-25 position-absolute top-40 start-50 translate-middle-x p-5 ' data-bs-theme="dark" dismissible><Alert.Heading>{alert}</Alert.Heading></Alert>)} */}
+      {alert && (<Alert variant="warning" className='mt-5 w-25 position-absolute top-50 start-50 translate-middle-x p-5 ' data-bs-theme="dark" dismissible><Alert.Heading>{alert}</Alert.Heading></Alert>)}
       </>
       )
 }

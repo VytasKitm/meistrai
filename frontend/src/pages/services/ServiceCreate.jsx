@@ -20,7 +20,7 @@ export const ServiceCreate = ({setPageState, citiesArray, createService}) => {
 
       return (
       <>
-      <div className='position-absolute top-50 start-50 translate-middle component p-4' data-bs-theme="dark">
+      <div className='position-absolute top-50 start-50 translate-middle component p-4' style={{width: "35vw", maxHeight: "80vh", tableLayout: "auto"}} data-bs-theme="dark">
             <h3>Add Service</h3>
             <br />
             <Form onSubmit={submitCreate}>

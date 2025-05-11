@@ -3,15 +3,22 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import ListGroup from 'react-bootstrap/ListGroup'
 
-export const MechanicCard = ({mechanicsArray, ratedMechanics, addRating, user}) => {
+export const MechanicCard = ({mechanicsArray, ratedMechanics, addRating, deleteRating}) => {
 
       const isRated = ((ratedMech, mech) => {
             const exists = ratedMech.some((rated) => rated.id === mech.id)
-            console.log(mech.id)
             return exists ? "no-hover ratingButton-selected" : "no-hover ratingButton-notSelected"
       })
 
-      
+      function toggleRating(mech_id) {
+            const exists = ratedMechanics.find((rated) => rated.id === mech_id)
+
+            exists ? 
+            deleteRating(mech_id) :
+            addRating(mech_id)
+      }
+
+
 
   return (
       <>
@@ -29,10 +36,10 @@ export const MechanicCard = ({mechanicsArray, ratedMechanics, addRating, user}) 
                         </Card.Body>
                         <ListGroup className="list-group-flush">
                               <ListGroup.Item>Service: {mechanic.service_name}</ListGroup.Item>
+                              <ListGroup.Item>Specialization: {mechanic.specialization_name}</ListGroup.Item>
                               <ListGroup.Item>City: {mechanic.city_name}</ListGroup.Item>
-                              <ListGroup.Item>Rating: {mechanic.rating}  <Button className={isRated(ratedMechanics, mechanic)} onClick={() => addRating(mechanic.id)}>&hearts;</Button></ListGroup.Item>
+                              <ListGroup.Item>Rating: {mechanic.rating}  <Button className={isRated(ratedMechanics, mechanic)} onClick={() => toggleRating(mechanic.id)}>&hearts;</Button></ListGroup.Item>
                         </ListGroup>
-                              <Button variant="primary">Go somewhere</Button>
                   </Card>
                   ))}
             </div>

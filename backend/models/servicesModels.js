@@ -59,7 +59,8 @@ async function serviceDeleteModel({id}) {
             return result.rowCount
       }
       catch (error) {
-            console.log("Error deleting service", error.detail)
+            console.log("Error deleting service", error)
+            throw(error)
       }
 }
 

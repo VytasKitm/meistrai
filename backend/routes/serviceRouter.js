@@ -5,7 +5,6 @@ import authenticateAdmin from '../middlewares/authenticateAdmin.js'
 
 const serviceRouter = express.Router()
 
-serviceRouter.route("/").post(serviceCreate).delete(serviceDelete)
 serviceRouter.route("/get").get(servicesGettAll)
 serviceRouter.route("/create").post(authenticateUser, authenticateAdmin, serviceCreate)
 serviceRouter.route("/update").put(authenticateUser, authenticateAdmin, serviceEdit)

@@ -1,6 +1,7 @@
 import {    ratingsByUserModel,
             ratingsByMechanicModel,
-            ratingsAddModel
+            ratingsAddModel,
+            ratingsDeleteModel
       } from "../models/ratingsModels.js";
 
 
@@ -57,7 +58,24 @@ async function ratingsAdd(req, res, next) {
       catch (error) {
             next(error)
       }
-
 }
 
-export {ratingsByUser, ratingsByMechanic, ratingsAdd}
+async function ratingsDelete(req, res, next) {
+      const {users_id, mechanics_id} = req.body
+      console.log(`req.body ratingsDelete: ${JSON.stringify(req.body)}`)
+
+      if (!users_id || !mechanics_id) {
+            const error = new Error("No user or mechanics Id, cant delete rating")
+            next(error)
+      }
+      
+      try {
+            await ratingsDeleteModel(req.body)
+            res.status(200).end()
+      }
+      catch (error) {
+            next(error)
+      }
+}
+
+export {ratingsByUser, ratingsByMechanic, ratingsAdd, ratingsDelete}

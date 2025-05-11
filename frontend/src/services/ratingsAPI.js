@@ -26,7 +26,7 @@ const ratingsByMechanicAPI = async({id}) => {
 
 const ratingsAddAPI = async (users_id, mechanics_id) => {
       const token = localStorage.getItem('token')
-      const ratings = await axios.post('http://localhost:3000/ratings/ratingAdd', {users_id, mechanics_id},
+      const ratings = await axios.post('http://localhost:3000/ratings/add', {users_id, mechanics_id},
             {
                   headers: {
                         Authorization: `Bearer ${token}`
@@ -35,5 +35,19 @@ const ratingsAddAPI = async (users_id, mechanics_id) => {
       )
 }
 
+const ratingsDeleteAPI = async (users_id, mechanics_id) => {
+      const token = localStorage.getItem('token')
+      const res = await axios.delete('http://localhost:3000/ratings/delete',
+             {    data: {
+                  users_id, 
+                  mechanics_id
+                  },
+                  headers: {
+                        Authorization: `Bearer ${token}`
+                  }
+            }
+      )
+}
 
-export {ratingsByUserAPI, ratingsByMechanicAPI, ratingsAddAPI}
+
+export {ratingsByUserAPI, ratingsByMechanicAPI, ratingsAddAPI, ratingsDeleteAPI}

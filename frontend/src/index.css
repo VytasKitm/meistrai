@@ -71,7 +71,7 @@ button:focus-visible {
 } */
 
 body {
-  background-color: #242424 !important;
+  /* background-color: #bb9595 !important; */
   color: rgba(255,255,255,0.87) !important;
 }
 
@@ -81,6 +81,9 @@ html, body, #root {
 }
 
 #root {
-  height: 90%;
-  width: 100%
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
