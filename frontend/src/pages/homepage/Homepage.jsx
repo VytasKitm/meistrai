@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react'
 import { MechanicCard } from './MechanicCard'
 import { mechanicsGetAllAPI } from '../../services/mechanicsAPI'
-import { ratingsByMechanicAPI, ratingsAddAPI, ratingsByUserAPI } from '../../services/ratingsAPI'
+import { ratingsAddAPI, ratingsByUserAPI, ratingsDeleteAPI } from '../../services/ratingsAPI'
 import { AuthorizationContext } from '../../context/AuthorizationProvider'
 
 
@@ -21,6 +21,7 @@ export const Homepage = () => {
             try {
 
                   await ratingsAddAPI(user.id, mechanics_id)
+                  getRatingsByUser(user.id)
                   getMechanics()
             }
             catch (error) {
@@ -28,14 +29,25 @@ export const Homepage = () => {
             }
       }
 
+      async function deleteRating(mechanics_id) {
+            console.log(mechanics_id)
+            console.log(user.id)
+            try {
+                  await ratingsDeleteAPI(user.id, mechanics_id)
+                  getRatingsByUser(user.id)
+                  getMechanics()
+            }
+            catch (error) {
+                  console.log("deleteRating Error", error)
+            }
+      }
+
+
       async function getRatingsByUser(id) {
             const ratings = await ratingsByUserAPI({id})
             setRatedMechanics(ratings)
       }
 
-      async function ratingToggle() {
-            
-      }
 
       useEffect(() => {
             getMechanics()
@@ -45,7 +57,7 @@ export const Homepage = () => {
 
       return (
       <div className='position-relative h-100 v-100 mt-5'>
-            <MechanicCard mechanicsArray={mechanicsArray} addRating={addRating} ratedMechanics={ratedMechanics} user={user}/>
+            <MechanicCard mechanicsArray={mechanicsArray} addRating={addRating} deleteRating={deleteRating} ratedMechanics={ratedMechanics} user={user}/>
       </div>
       )
 }

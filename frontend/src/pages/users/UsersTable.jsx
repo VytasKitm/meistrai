@@ -5,7 +5,7 @@ import { ActionSelect } from '../../components/ActionSelect'
 
 export const UsersTable = ({users, userDelete, findEditUser, setPageState}) => {
   	return (
-    		<div data-bs-theme="dark" className='position-absolute top-50 start-50 translate-middle component p-4' style={{width: "50vw", tableLayout: "auto"}}>
+    		<div data-bs-theme="dark" className='d-flex flex-column mx-auto mt-5 p-4 component' style={{width: "50vw", tableLayout: "auto"}}>
 		<h3>Users table</h3>
             <br />
 			<Table striped bordered hover >
@@ -31,7 +31,7 @@ export const UsersTable = ({users, userDelete, findEditUser, setPageState}) => {
 				))}
     			</Table>
 			
-			<Button onClick={() => setPageState("create")} variant="primary" type="button" size="sm">
+			<Button style={{width: "5vw"}} onClick={() => setPageState("create")} variant="primary" type="button" size="sm">
                         Add User
                   </Button>
 			
@@ -39,3 +39,6 @@ export const UsersTable = ({users, userDelete, findEditUser, setPageState}) => {
     		</div>
   	)
 }
+
+
+// className='position-absolute top-50 start-50 translate-middle component p-4'

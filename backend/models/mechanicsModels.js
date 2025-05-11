@@ -1,11 +1,11 @@
 import {pool} from "../database/database.js"
 
 
-async function mechanicCreateModel({name, last_name, service_id, specialization_id}) {
+async function mechanicCreateModel({name, lastName, serviceId, specializationId}) {
       const query = `INSERT INTO mechanics (name, last_name, service_id, specialization_id)
-                        VALUES ($1, $2, $3)
+                        VALUES ($1, $2, $3, $4)
                         RETURNING id`
-      const values = [name, last_name, service_id, specialization_id]
+      const values = [name, lastName, serviceId, specializationId]
 
       try {
             const result = await pool.query(query, values)
@@ -13,26 +13,28 @@ async function mechanicCreateModel({name, last_name, service_id, specialization_
       }
       catch(error) {
             console.log("Error writing mechanic to database", error.detail)
+            throw (error)
       }
 }
 
 
-async function mechanicEditModel({id, name, last_name, service_id, specialization_id}) {
+async function mechanicEditModel({id, name, lastName, serviceId, specializationId}) {
       const query = `UPDATE ONLY mechanics
                         SET   name = $2,
                               last_name = $3,
-                              service_id = $4,
-                              specialization_id = $5
+                              service_id = COALESCE($4, service_id),
+                              specialization_id = COALESCE($5, specialization_id)
                         WHERE id = $1
                         RETURNING id, name, last_name, service_id, specialization_id`
 
-      const values = [id, name, last_name, service_id, specialization_id]
+      const values = [id, name, lastName, serviceId, specializationId]
       try {
             const result = await pool.query(query, values)
             return result
       }
       catch (error) {
-            console.log("Error updating mechanic", error.detail)
+            console.log("Error updating mechanic", error)
+            throw(error)
       }
 }
 
@@ -56,7 +58,7 @@ async function mechanicsGetAllModel() {
                                           ON ratings.mechanics_id = mechanics.id
                               GROUP BY
                                     mechanics.id, mechanics_name, mechanics_last_name, service_name, city_name, specialization_name, rating
-                              ORDER BY mechanics.name`
+                              ORDER BY mechanics.last_name`
       
       try {
             const result = await pool.query(query)

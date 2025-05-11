@@ -31,8 +31,7 @@ const updateServiceAPI = async ({id, service_name, city_id}) => {
 }
 
 const deleteServiceAPI = async (id) => {
-      console.log("deleteServiceAPI:", id)
-      try {
+      // try {
             const token = localStorage.getItem('token')
             const res = await axios.delete(`http://localhost:3000/services/delete/${id}`,
                   {
@@ -40,12 +39,12 @@ const deleteServiceAPI = async (id) => {
                               Authorization: `Bearer ${token}`
                         }
                   })
-                  return res
+            return res
       }
-      catch (error) {
-            console.log("Error deleteServiceAPI", error)
-            throw (error)
-      }
-}
+      // catch (error) {
+      //       console.log("Error deleteServiceAPI", error)
+      //       throw (error)
+      // }
+// }
 
 export {getAllServicesAPI, createServiceAPI, updateServiceAPI, deleteServiceAPI}

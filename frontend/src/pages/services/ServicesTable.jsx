@@ -5,7 +5,7 @@ import { ActionSelect } from '../../components/ActionSelect'
 
 export const ServicesTable = ({setPageState, servicesArray, findEditService, deleteService}) => {
   	return (
-    		<div data-bs-theme="dark" className='d-flex flex-column mx-auto mt-5 p-4 component' style={{width: "50vw", maxHeight: "80vh", tableLayout: "auto"}}>
+    		<div data-bs-theme="dark" className='d-flex flex-column mx-auto mt-5 p-4 component' style={{width: "50vw", maxHeight: "90vh", tableLayout: "auto"}}>
 		<h3>Services table</h3>
             <br />
 		<div className='flex-grow-1 overflow-auto'>

@@ -5,10 +5,10 @@ import {    mechanicCreateModel,
       } from "../models/mechanicsModels.js";
 
 async function mechanicCreate(req, res, next) {
-      const {name, last_name, service_id} = req.body
+      const {name, lastName, serviceId, specializationId} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
-            if (!name || !last_name || !service_id) {
+            if (!name || !lastName || !serviceId || !specializationId) {
                   const error = new Error("Truksta name/last_name/service_id")
                   return next(error)
             }
@@ -33,26 +33,18 @@ async function mechanicsGetAll(req, res, next) {
 }
 
 async function mechanicEdit(req, res, next) {
-      const {id, name, last_name, service_id, specialization_id} = req.body
+      const {id, name, lastName, serviceId, specializationId} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
             if (!id ||
                 !name ||
-                !last_name ||
-                !service_id ||
-                !specialization_id) {
+                !lastName ) {
                   
                   const error = new Error("Blogi mechaniko duomenys")
                   return next(error)
             }
             const result = await mechanicEditModel(req.body)
-            res.status(200).json({
-                  id,
-                  name,
-                  last_name,
-                  service_id,
-                  specialization_id
-            })
+            res.status(200).end()
       }
       catch (error) {
             next(error)
@@ -61,14 +53,14 @@ async function mechanicEdit(req, res, next) {
 
 
 async function mechanicDelete(req, res, next) {
-      const {id} = req.body
-      console.log(`req.body: ${JSON.stringify(req.body)}`)
+      const {id} = req.params
+      console.log(`req.body: ${JSON.stringify(req.params)}`)
       try {
             if (!id) {
                   const error = new Error("Truksta mechaniko id")
                   return next(error)
             }
-            const result = await mechanicDeleteModel(req.body)
+            const result = await mechanicDeleteModel(req.params)
             res.status(200).end()
       }
       catch (error) {

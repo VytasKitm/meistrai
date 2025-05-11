@@ -62,6 +62,9 @@ async function serviceDelete(req, res, next) {
             res.status(200).end()
       }
       catch (error) {
+            if (error.code === '23503') {
+                  return res.status(409).json({error: 'Cant delete service that is in use', code: '23503'})
+            }
             next(error)
       }
 }
