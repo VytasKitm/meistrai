@@ -3,7 +3,6 @@ import axios from 'axios'
 const loginUserAPI = async (email, password) => {
       try {
             const res = await axios.post('http://localhost:3000/users/login', {email, password})
-            console.log("loginUserAPI:",res)
             return res
       }
       catch (error) {
@@ -16,7 +15,6 @@ const loginUserAPI = async (email, password) => {
 const infoUserAPI = async (id) => {
       try {
             const res = await axios.get(`http://localhost:3000/users/${id}`)
-            console.log("infoUserAPI: ",res.data)
             return res.data
       }
       catch (error) {
@@ -25,9 +23,10 @@ const infoUserAPI = async (id) => {
       }
 }
 
-const createUserAPI = async ({name, email, role, password}) => {
-            const res = await axios.post('http://localhost:3000/users/create', {name, email, role, password})
-            return res
+const createUserAPI = async (name, email, role, password) => {
+      console.log("createUserAPI sending", {name, email, role, password})
+      const res = await axios.post('http://localhost:3000/users/create', {name, email, role, password})
+      return res
 }
 
 
@@ -45,13 +44,11 @@ const createUserAdminAPI = async (name, email, role, password) => {
 
 const getAllUsersAPI = async () => {
       const res = await axios.get('http://localhost:3000/users/get')
-      console.log("getAllUsersAPI: ",res)
       return res.data
 }
 
 const deleteUserAPI = async (id) => {
       try {
-            console.log(id)
             const token = localStorage.getItem('token')
             const res = await axios.delete(`http://localhost:3000/users/delete/${id}`,
             {
@@ -74,7 +71,6 @@ const updateUserAPI = async ({id, name, email, role, password}) => {
                         Authorization: `Bearer ${token}`
                   }
       })
-      console.log("updateUserAPI: ", res)
       return res
 }
 

@@ -1,21 +1,21 @@
 import {pool} from "../database/database.js"
 
-async function cityCreateModel({name}) {
+async function cityCreateModel({cityName}) {
 
       const query = `INSERT INTO cities (name)
                         VALUES ($1)
                         RETURNING id`
       
-      const values = [name]
+      const values = [cityName]
 
       try {
             const result = await pool.query(query, values)
             return result
       }
       catch(error) {
-            console.log("Error writing city to database", error.detail)
-      }
-      
+            console.log("Error creating city: ", error.detail)
+            throw (error)
+      }     
 }
 
 async function cityDeleteModel({id}) {
@@ -32,4 +32,19 @@ async function cityDeleteModel({id}) {
       }
 }
 
-export { cityCreateModel, cityDeleteModel }
+async function citiesGetAllModel() {
+
+      const query = `SELECT id, name
+                        FROM cities
+                        ORDER BY name`
+      
+      try {
+            const result = await pool.query(query)
+            return result.rows
+      }
+      catch (error) {
+            console.log("Error getting all cities from db", error.detail)
+      }
+}
+
+export { cityCreateModel, cityDeleteModel, citiesGetAllModel }

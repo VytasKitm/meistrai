@@ -14,7 +14,7 @@ export const UserEdit = ({editUser, userUpdate, setPageState}) => {
       async function submitUpdate(event) {
             event.preventDefault()
             userUpdate({...editUser, name, email, role, password})
-            setPageState("table")
+            // setPageState("table")
       }
 
       function clear() {
@@ -47,7 +47,7 @@ export const UserEdit = ({editUser, userUpdate, setPageState}) => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>New Password</Form.Label>
                         <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" value={password}/>
                   </Form.Group>
                   <Button variant="primary" type="submit" className='me-2'>

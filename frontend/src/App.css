@@ -11,8 +11,42 @@
 .component {
   	background-color: #424242;
       box-shadow: 0 5px 25px -5px #000, 0 8px 10px -6px #000;
-	border-radius: 2%;
+	border-radius: 0.5rem;
 }
+
+.no-hover:hover, .no-hover:focus,.no-hover:active{
+  
+  background-color: unset !important;
+  border-color: unset !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  color: red
+}
+
+.ratingButton-selected {
+  border: none;
+  color: red;
+  background-color: unset;
+  font-size: 2rem;
+  padding: 0;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.ratingButton-notSelected {
+  border: none;
+  color: white;
+  background-color: unset;
+  font-size: 1rem;
+  padding: 0;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+
+
+
 
 
 

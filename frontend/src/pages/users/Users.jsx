@@ -43,7 +43,6 @@ export const Users = () => {
 		catch (error) {
 			console.log("update User (userEdit) Erorr: ", error)
 		}
-
 	}
 
 	async function userDelete(id) {

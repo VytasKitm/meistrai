@@ -10,6 +10,7 @@ export const RegForm = ({name, email, password, setName, setEmail, setPassword, 
       async function formValidation(event){
             event.preventDefault()
             setAlert("")
+            console.log({name, email, password})
             if (!name || !email || !password) {
                   setAlert("Uzpildykite visus laukus")
                   return
@@ -35,7 +36,7 @@ export const RegForm = ({name, email, password, setName, setEmail, setPassword, 
 
       return (
       <>
-      <div className='position-absolute top-50 start-50 translate-middle component p-5' data-bs-theme="dark">
+      <div className='position-absolute top-50 start-50 translate-middle component p-4' data-bs-theme="dark">
             <Form onSubmit={formValidation}>
                   <Form.Group className="mb-3" controlId="formBasicName">
                         <Form.Label>Name</Form.Label>

@@ -1,10 +1,14 @@
-import { serviceCreateModel, serviceDeleteModel, serviceEditModel } from "../models/servicesModels.js";
+import {    serviceCreateModel,
+            serviceDeleteModel,
+            serviceEditModel,
+            servicesGetAllModel 
+      } from "../models/servicesModels.js";
 
 async function serviceCreate(req, res, next) {
-      const {name, city_id} = req.body
+      const {service_name, city_id} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
-            if (!name || !city_id) {
+            if (!service_name || !city_id) {
                   const error = new Error("Truksta serviso pavadinimo/miesto")
                   return next(error)
             }
@@ -20,34 +24,19 @@ async function serviceCreate(req, res, next) {
 }
 
 async function serviceEdit(req, res, next) {
-      const {id, name, city_id} = req.body
+      const {id, service_name, city_id} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
-            if (!id || !name || !city_id) {
+            if (!id || !service_name) {
                   const error = new Error("Blogi servico duomenys")
                   return next(error)
             }
             const result = await serviceEditModel(req.body)
             res.status(200).json({
                   id,
-                  name,
+                  service_name,
                   city_id 
             })
-      }
-      catch (error) {
-            next(error)
-      }
-}
-
-async function serviceDelete(req, res, next) {
-      const {id} = req.body
-      console.log(`req.body: ${JSON.stringify(req.body)}`)
-      try {
-            if (!id) {
-                  const error = new Error("Blogas serviso id")
-                  return next(error)
-            }
-            await serviceDeleteModel(req.body)
             res.status(200).end()
       }
       catch (error) {
@@ -55,4 +44,37 @@ async function serviceDelete(req, res, next) {
       }
 }
 
-export { serviceCreate, serviceEdit, serviceDelete }
+async function serviceDelete(req, res, next) {
+      const {id} = req.params
+      console.log(`req.body: ${JSON.stringify(req.params)}`)
+      try {
+            if (!id) {
+                  const error = new Error("Blogas serviso id")
+                  return next(error)
+            }
+            const result = await serviceDeleteModel(req.params)
+
+            if (result.rowCount === 0) {
+                  const error = new Error("No service found")
+                  throw (error)
+            }
+
+            res.status(200).end()
+      }
+      catch (error) {
+            next(error)
+      }
+}
+
+async function servicesGettAll(req, res, next) {
+      try {
+            const services = await servicesGetAllModel()
+            console.log("servicesGetAll", services)
+            res.status(200).json(services)
+      }
+      catch (error) {
+            next(error)
+      }
+}
+
+export { serviceCreate, serviceEdit, serviceDelete, servicesGettAll }

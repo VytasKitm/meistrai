@@ -1,11 +1,13 @@
 import React from 'react'
-import { CityCreate } from '../../components/CityCreate'
+import { CityCreate } from './CityCreate'
 
 export const Cities = () => {
   return (
       <>
-      <div className='position-relative h-90 v-100 mt-5' >Admin</div>
+      <div className='position-relative h-100 v-100 mt-5' >Admin
       <CityCreate/>
+
+      </div>
       </>
   )
 }
