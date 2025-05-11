@@ -1,4 +1,8 @@
-import { mechanicCreateModel, mechanicDeleteModel, mechanicEditModel } from "../models/mechanicsModels.js";
+import {    mechanicCreateModel, 
+            mechanicDeleteModel, 
+            mechanicEditModel,
+            mechanicsGetAllModel
+      } from "../models/mechanicsModels.js";
 
 async function mechanicCreate(req, res, next) {
       const {name, last_name, service_id} = req.body
@@ -14,6 +18,16 @@ async function mechanicCreate(req, res, next) {
             })
       }
       catch(error) {
+            next(error)
+      }
+}
+
+async function mechanicsGetAll(req, res, next) {
+      try {
+            const mechanics = await mechanicsGetAllModel()
+            res.status(200).json(mechanics)
+      }
+      catch (error){
             next(error)
       }
 }
@@ -63,4 +77,4 @@ async function mechanicDelete(req, res, next) {
 
 }
 
-export { mechanicCreate, mechanicEdit, mechanicDelete }
+export { mechanicCreate, mechanicEdit, mechanicDelete, mechanicsGetAll}

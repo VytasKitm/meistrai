@@ -15,7 +15,6 @@ export const UserCreate = ({createUser, setPageState}) => {
       async function submitCreate(event) {
             event.preventDefault()
             createUser(name, email, role, password)
-            setPageState("create")
       }
 
       function clear() {

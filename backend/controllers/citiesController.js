@@ -1,10 +1,13 @@
-import { cityCreateModel, cityDeleteModel } from "../models/citiesModels.js";
+import {    cityCreateModel,
+            cityDeleteModel,
+            citiesGetAllModel
+      } from "../models/citiesModels.js";
 
 async function cityCreate(req, res, next) {
-      const {name} = req.body
+      const {cityName} = req.body
       console.log(`req.body: ${JSON.stringify(req.body)}`)
       try {
-            if (!name) {
+            if (!cityName) {
                   const error = new Error("Truksta miesto pavadinimo")
                   return next(error)
             } 
@@ -12,6 +15,9 @@ async function cityCreate(req, res, next) {
             res.status(200).json({"city_id": result.rows[0].id})
       }
       catch(error) {
+             if (error.code === '23505') {
+                  return res.status(409).json({error: 'City already exists', code: '23505'})
+            }
             next(error)
       }
 }
@@ -30,7 +36,16 @@ async function cityDelete(req, res, next) {
       catch(error) {
             next(error)
       }
-
 }
 
-export { cityCreate, cityDelete }
+async function citiesGetAll(req, res, next) {
+      try {
+            const cities = await citiesGetAllModel()
+            res.status(200).json(cities)
+      }
+      catch (error){
+            next(error)
+      }
+}
+
+export { cityCreate, cityDelete, citiesGetAll }

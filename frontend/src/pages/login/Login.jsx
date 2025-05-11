@@ -33,7 +33,8 @@ export const Login = () => {
       }
 
 	async function submitRegister() {
-			await createUserAPI(name, email, "", password)
+		console.log({name, email, password})
+		await createUserAPI(name, email, "", password)
 	}
 
 	function clear() {

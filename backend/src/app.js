@@ -6,6 +6,7 @@ import citiesRouter from '../routes/citiesRouter.js'
 import mechanicsRouter from '../routes/mechanicsRouter.js'
 import serviceRouter from '../routes/serviceRouter.js'
 import userRouter from '../routes/userRouter.js'
+import ratingsRouter from '../routes/ratingsRouter.js'
 
 const app = express()
 
@@ -23,6 +24,7 @@ app.use("/cities", citiesRouter)
 app.use("/mechanics", mechanicsRouter)
 app.use("/services", serviceRouter)
 app.use("/users", userRouter)
+app.use("/ratings", ratingsRouter)
 
 
 app.use(errorHandler)

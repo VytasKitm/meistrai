@@ -1,5 +1,5 @@
 import React from 'react'
-import { CityCreate } from '../../components/CityCreate'
+import { CityCreate } from '../cities/CityCreate'
 
 export const Admin = () => {
   return (

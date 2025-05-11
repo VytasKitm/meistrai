@@ -40,7 +40,7 @@ async function servicesTableCreate() {
 async function citiesTableCreate() {
       const query = `CREATE TABLE IF NOT EXISTS cities (
                         id               SERIAL PRIMARY KEY,
-                        name             TEXT NOT NULL
+                        name             TEXT NOT NULL UNIQUE
                   );`
       try {
             await pool.query(query)
