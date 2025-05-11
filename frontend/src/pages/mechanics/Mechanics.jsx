@@ -85,28 +85,6 @@ export const Mechanics = () => {
 	}
 
 
-	// async function deleteService(id) {
-	// 	setAlert("")
-	// 	try {
-	// 		await deleteServiceAPI(id)
-	// 		getAllServices()
-	// 	}
-	// 	catch (error) {
-	// 		const status = error.response?.status
-      //             const code = error.response?.data?.code
-
-      //             if (status === 409 && code === '23503') {
-      //                   setAlert("Service is in use.")
-      //             }
-      //             else {
-      //                   setAlert(error.message || "Error")
-      //             }
-      //             console.log(error)
-	// 		console.log("Error deleting service", error)
-	// 	}
-	// }
-
-
   	return (
 		<>
         	<div className='position-relative h-100 v-100 mt-5' >

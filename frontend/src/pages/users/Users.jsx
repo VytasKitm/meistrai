@@ -5,6 +5,8 @@ import { UsersTable } from './UsersTable'
 import { deleteUserAPI, updateUserAPI, createUserAdminAPI } from '../../services/usersAPI'
 import { UserEdit } from './UserEdit'
 import { UserCreate } from './UserCreate'
+import  Spinner from 'react-bootstrap/Spinner'
+
 
 export const Users = () => {
   	const [users, setUsers] = useState([])
@@ -67,7 +69,7 @@ export const Users = () => {
 				(<UsersTable users={users} userDelete={userDelete} findEditUser={findEditUser} setPageState={setPageState}/>) :
 			pageState === "create" ?
 				(<UserCreate createUser={createUser} setPageState={setPageState}/>) :
-				(<></>)
+				(<Spinner animation="border"/>)
 			}
 			
         	</div>
