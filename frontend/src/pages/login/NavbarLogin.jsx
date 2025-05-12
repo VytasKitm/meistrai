@@ -24,16 +24,7 @@ export const NavbarLogin = ({registerState, setRegisterState, clear}) => {
 			<Navbar.Brand>Mechanics</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav"> 
-					{/* <Nav className="me-auto" variant="tabs" defaultActiveKey="/home">
-						<Nav.Link as={NavLink} to="/home">Home</Nav.Link>
-						<Nav.Link as={NavLink} to="/favorites">Favorites</Nav.Link>
-						<Nav.Link as={NavLink} to="/mechanics">Mechanics</Nav.Link>
-						<Nav.Link as={NavLink} to="/filters">Filters</Nav.Link>
-					</Nav> */}
 					<Nav className="ms-auto" variant="pills">	
-						{/* <Navbar.Text>
-							Signed in as:
-						</Navbar.Text> */}
 						{registerState === "login" && (<Button onClick={registerSet} variant="outline-light"  className='ms-2 p-1' size='sm'>Register</Button>)}
 						{registerState === "register" && (<Button onClick={loginSet} variant="outline-light"  className='ms-2 p-1' size='sm'>Log In</Button>)}
 					</Nav>

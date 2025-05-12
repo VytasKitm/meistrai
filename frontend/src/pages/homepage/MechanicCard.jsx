@@ -22,7 +22,7 @@ export const MechanicCard = ({mechanicsArray, ratedMechanics, addRating, deleteR
 
   return (
       <>
-      <div data-bs-theme="dark" className='d-flex mx-auto mt-5 p-4 component' style={{maxWidth: "90vw", maxHeight: "90vh", tableLayout: "auto"}}>
+      <div data-bs-theme="dark" className='d-flex mx-auto mt-3 p-4 component' style={{maxWidth: "90vw", maxHeight: "90vh", tableLayout: "auto"}}>
             <div className='flex-grow-1 d-flex justify-content-center flex-wrap overflow-auto'>
                   {console.log("ratedMechanics:", ratedMechanics)}
                   {mechanicsArray.map((mechanic) =>  (
