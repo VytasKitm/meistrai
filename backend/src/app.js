@@ -8,6 +8,7 @@ import serviceRouter from '../routes/serviceRouter.js'
 import userRouter from '../routes/userRouter.js'
 import ratingsRouter from '../routes/ratingsRouter.js'
 import specializationRouter from '../routes/specializationsRoute.js'
+import searchRouter from '../routes/searchRouter.js'
 
 const app = express()
 
@@ -27,6 +28,7 @@ app.use("/services", serviceRouter)
 app.use("/users", userRouter)
 app.use("/ratings", ratingsRouter)
 app.use("/specializations", specializationRouter)
+app.use("/search", searchRouter)
 
 
 app.use(errorHandler)
