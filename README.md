@@ -6,3 +6,5 @@ For fresh data uncomment these lines in /backend/src/server.js:
 
             // await createTables()
             // await testData()
+
+Not recomended. Need to setup new admin in database.
